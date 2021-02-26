@@ -18,7 +18,7 @@ serverNameAndDomainUpCase=SERVIDOR.TIITANET.LOCAL
 #altera arquivo krb5
 #sudo mv /etc/krb5.conf /etc/krb5.conf.default
 #cria arquivo /etc/krb5.conf
-#touch /etc/krb5.conf
+#sudo touch /etc/krb5.conf
 
 
 
@@ -47,14 +47,25 @@ serverNameAndDomainUpCase=SERVIDOR.TIITANET.LOCAL
 #sleep 3
 
 
-echo 'Informe o nome do PC: '
-read namePc
+#echo 'Informe o nome do PC: '
+#read namePc
 
 #Maiuscula e minuscula
-namePcUpperCase=$(echo $namePc | tr [a-z] [A-Z])
-namePcLowerCase=$(echo $namePc | tr [A-Z] [a-z])
+#namePcUpperCase=$(echo $namePc | tr [a-z] [A-Z])
+#namePcLowerCase=$(echo $namePc | tr [A-Z] [a-z])
 
-echo "msktutil -N -c -b 'CN=COMPUTERS' -s $namePcUpperCase/$namePcLowerCase.$serverDomain -k my-keytab.keytab --computer-name $namePcUpperCase --upn $namePcUpperCase$ --server $serverNameAndDomain --user-creds-only"
-echo "msktutil -N -c -b 'CN=COMPUTERS' -s $namePcUpperCase/$namePcLowerCase -k my-keytab.keytab --computer-name $namePcUpperCase --upn $namePcUpperCase$ --server $serverNameAndDomain --user-creds-only"
+#msktutil -N -c -b 'CN=COMPUTERS' -s $namePcUpperCase/$namePcLowerCase.$serverDomain -k my-keytab.keytab --computer-name $namePcUpperCase --upn $namePcUpperCase$ --server $serverNameAndDomain --user-creds-only
+#msktutil -N -c -b 'CN=COMPUTERS' -s $namePcUpperCase/$namePcLowerCase -k my-keytab.keytab --computer-name $namePcUpperCase --upn $namePcUpperCase$ --server $serverNameAndDomain --user-creds-only
 
+#kdestroy
+
+#sudo chmod 0600 /etc/sssd/sssd.conf
+
+#sed -i "/pam_unix.so/a session required pam_mkhomedir.so skel=/etc/skel umask=0077" /etc/pam.d/common-session
+
+#sudo systemctl restart sssd
+
+#sudo adduser administrator sudo
+
+#su -l administrator
 
