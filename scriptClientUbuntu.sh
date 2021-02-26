@@ -1,6 +1,6 @@
-#!bin/bash
+ #!bin/bash
 
-variaveis
+#variaveis
 serverIp=10.0.1.154
 serverName=servidor
 serverDomain=tiitanet.local
@@ -8,50 +8,46 @@ serverDomainUpCase=TIITANET.LOCAL
 serverNameAndDomain=servidor.tiitanet.local
 serverNameAndDomainUpCase=SERVIDOR.TIITANET.LOCAL
 
+#insere o nome e o dominio do servidor /etc/hosts
 sed -i "/127.0.1.1/a $serverIp	$serverName $serverNameAndDomain" /etc/hosts
 
+#atualizações do sistema
 sudo apt update && sudo apt dist-upgrade -y
 flatpak update
 sudo apt autoclean
 sudo apt autoremove -y
-
-
 sudo apt install sssd heimdal-clients msktutil -y
 
-
-
 #altera arquivo krb5
-#sudo mv /etc/krb5.conf /etc/krb5.conf.default
-#cria arquivo /etc/krb5.conf
-#sudo touch /etc/krb5.conf
-
-
-
+sudo mv /etc/krb5.conf /etc/krb5.conf.default
 
 #escreve no arquivo /etc/krb5.conf
-#cat > '/etc/krb5.conf' <<EOT
-#[libdefaults]
-#default_realm = $serverDomainUpCase
-#rdns = no
-#dns_lookup_kdc = true
-#dns_lookup_realm = true
+cat > '/etc/krb5.conf' <<EOT
+[libdefaults]
+default_realm = $serverDomainUpCase
+rdns = no
+dns_lookup_kdc = true
+dns_lookup_realm = true
 
-#[realms]
-#$serverDomainUpCase = {
-#kdc = $serverNameAndDomain
-#admin_server = $serverNameAndDomain
-#}
-#EOT
-
-
-
+[realms]
+$serverDomainUpCase = {
+kdc = $serverNameAndDomain
+admin_server = $serverNameAndDomain
+}
+EOT
 
 #colocar senha do administrator
-#kinit administrator
-#klist
-#sleep 3
-
-
+kinit administrator
+comp=$?
+if [ $comp -eq "1" ];
+then
+        while [ $comp -eq "1" ]; do
+        kinit administrator
+        comp=$?
+        done
+fi
+klist
+sleep 3
 echo 'Informe o nome do PC: '
 read namePc
 
@@ -59,15 +55,16 @@ read namePc
 namePcUpperCase=$(echo $namePc | tr [a-z] [A-Z])
 namePcLowerCase=$(echo $namePc | tr [A-Z] [a-z])
 
+#inicializa Kerberos e gera Keytab
 msktutil -N -c -b 'CN=COMPUTERS' -s $namePcUpperCase/$namePcLowerCase.$serverDomain -k my-keytab.keytab --computer-name $namePcUpperCase --upn $namePcUpperCase --server $serverNameAndDomain --user-creds-only
-msktutil -N -c -b 'CN=COMPUTERS' -s $namePcUpperCase/$namePcLowerCase -k my-keytab.keytab --computer-name $namePcUpperCase --upn $namePcUpperCase --server $serverNameAndDomain --user-creds-only
-
+msktutil -N -c -b 'CN=COMPUTERS' -s $namePcUpperCase/$namePcLowerCase -k my-keytab.keytab --computer-name $namePcUpperCase --upn $namePcUpperCase~$ --server $serverNameAndDomain --user-creds-only
 kdestroy
 
-
-
+#configura arquivo Keytap
 sudo mv my-keytab.keytab /etc/sssd/my-keytab.keytab
 sudo touch  /etc/sssd/sssd.conf
+
+#configura arquivo sssd
 cat > '/etc/sssd/sssd.conf' <<EOT
 [sssd]
 services = nss, pam
@@ -100,18 +97,18 @@ ldap_sasl_mech = gssapi
 ldap_sasl_authid = $namePcUpperCase$
 krb5_keytab = /etc/sssd/my-keytab.keytab
 ldap_krb5_init_creds = true
-
 EOT
 
+#da permissão no arquivo sssd
+sudo chmod 0600 /etc/sssd/sssd.conf
 
+#adiciona linha no arquivo /etc/pam.d/common-session
+sed -i "/pam_unix.so/a session required pam_mkhomedir.so skel=/etc/skel umask=0077" /etc/pam.d/common-session
 
-#sudo chmod 0600 /etc/sssd/sssd.conf
+#reinicia o sssd
+sudo systemctl restart sssd
 
-#sed -i "/pam_unix.so/a session required pam_mkhomedir.so skel=/etc/skel umask=0077" /etc/pam.d/common-session
-
-#sudo systemctl restart sssd
-
-#sudo adduser administrator sudo
-
-#su -l administrator
+#cria o administrador
+sudo adduser administrator sudo
+su -l administrator
 
