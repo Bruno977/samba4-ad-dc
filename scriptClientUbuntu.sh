@@ -1,6 +1,6 @@
 #!bin/bash
 
-#variaveis
+variaveis
 serverIp=10.0.1.154
 serverName=servidor
 serverDomain=tiitanet.local
@@ -8,10 +8,15 @@ serverDomainUpCase=TIITANET.LOCAL
 serverNameAndDomain=servidor.tiitanet.local
 serverNameAndDomainUpCase=SERVIDOR.TIITANET.LOCAL
 
+sed -i "/127.0.1.1/a $serverIp	$serverName $serverNameAndDomain" /etc/hosts
+
+sudo apt update && sudo apt dist-upgrade -y
+flatpak update
+sudo apt autoclean
+sudo apt autoremove -y
 
 
-#modifica o arquivo /etc/hosts com os dados do servidor
-#sed -i "/127.0.1.1/a $serverIp	$serverName $serverNameAndDomain" /etc/hosts
+sudo apt install sssd heimdal-clients msktutil -y
 
 
 
@@ -47,17 +52,58 @@ serverNameAndDomainUpCase=SERVIDOR.TIITANET.LOCAL
 #sleep 3
 
 
-#echo 'Informe o nome do PC: '
-#read namePc
+echo 'Informe o nome do PC: '
+read namePc
 
 #Maiuscula e minuscula
-#namePcUpperCase=$(echo $namePc | tr [a-z] [A-Z])
-#namePcLowerCase=$(echo $namePc | tr [A-Z] [a-z])
+namePcUpperCase=$(echo $namePc | tr [a-z] [A-Z])
+namePcLowerCase=$(echo $namePc | tr [A-Z] [a-z])
 
-#msktutil -N -c -b 'CN=COMPUTERS' -s $namePcUpperCase/$namePcLowerCase.$serverDomain -k my-keytab.keytab --computer-name $namePcUpperCase --upn $namePcUpperCase$ --server $serverNameAndDomain --user-creds-only
-#msktutil -N -c -b 'CN=COMPUTERS' -s $namePcUpperCase/$namePcLowerCase -k my-keytab.keytab --computer-name $namePcUpperCase --upn $namePcUpperCase$ --server $serverNameAndDomain --user-creds-only
+msktutil -N -c -b 'CN=COMPUTERS' -s $namePcUpperCase/$namePcLowerCase.$serverDomain -k my-keytab.keytab --computer-name $namePcUpperCase --upn $namePcUpperCase --server $serverNameAndDomain --user-creds-only
+msktutil -N -c -b 'CN=COMPUTERS' -s $namePcUpperCase/$namePcLowerCase -k my-keytab.keytab --computer-name $namePcUpperCase --upn $namePcUpperCase --server $serverNameAndDomain --user-creds-only
 
-#kdestroy
+kdestroy
+
+
+
+sudo mv my-keytab.keytab /etc/sssd/my-keytab.keytab
+sudo touch  /etc/sssd/sssd.conf
+cat > '/etc/sssd/sssd.conf' <<EOT
+[sssd]
+services = nss, pam
+config_file_version = 2
+domains = $serverDomain
+
+[nss]
+entry_negative_timeout = 0
+#debug_level = 5
+
+[pam]
+#debug_level = 5
+
+[domain/$serverDomain]
+#debug_level = 10
+enumerate = false
+id_provider = ad
+auth_provider = ad
+chpass_provider = ad
+access_provider = ad
+dyndns_update = false
+ad_hostname = $namePcLowerCase.$serverDomain
+ad_server = $serverNameAndDomain
+ad_domain = $serverDomain
+ldap_schema = ad
+ldap_id_mapping = true
+fallback_homedir = /home/%u
+default_shell = /bin/bash
+ldap_sasl_mech = gssapi
+ldap_sasl_authid = $namePcUpperCase$
+krb5_keytab = /etc/sssd/my-keytab.keytab
+ldap_krb5_init_creds = true
+
+EOT
+
+
 
 #sudo chmod 0600 /etc/sssd/sssd.conf
 
