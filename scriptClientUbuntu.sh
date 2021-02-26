@@ -50,8 +50,11 @@ serverNameAndDomainUpCase=SERVIDOR.TIITANET.LOCAL
 echo 'Informe o nome do PC: '
 read namePc
 
+#Maiuscula e minuscula
 namePcUpperCase=$(echo $namePc | tr [a-z] [A-Z])
 namePcLowerCase=$(echo $namePc | tr [A-Z] [a-z])
 
-echo $namePcLowerCase
+echo "msktutil -N -c -b 'CN=COMPUTERS' -s $namePcUpperCase/$namePcLowerCase.$serverDomain -k my-keytab.keytab --computer-name $namePcUpperCase --upn $namePcUpperCase$ --server $serverNameAndDomain --user-creds-only"
+echo "msktutil -N -c -b 'CN=COMPUTERS' -s $namePcUpperCase/$namePcLowerCase -k my-keytab.keytab --computer-name $namePcUpperCase --upn $namePcUpperCase$ --server $serverNameAndDomain --user-creds-only"
+
 
