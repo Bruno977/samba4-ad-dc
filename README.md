@@ -1,7 +1,8 @@
 # Script active directory <img src="https://img.shields.io/static/v1?label=activedirectory&message=samba4&color=blue&style=for-the-badge"/>
 
 <h2> Sistema AD/DC - Debian e cliente ubuntu</h2><br>
-<h3> Autenticar ubuntu no servidor active directory </h3>
+
+<h2>Autenticar ubuntu no servidor active directory</h2><br />
 
 1) Baixar os arquivos do repositorio
 2) Extrair os arquivos.
@@ -43,6 +44,32 @@ $ serverad
 8) Logo após, informe o nome do PC, caso não saiba, execute o seguinte comando no terminal:
 ```
 $ hostname
+```
+
+<h2>Habilitando perfil móvel com **NFS**</h2><br />
+
+1) Dê permissão para o script
+
+```
+$ sudo chmod +x scriptClientUbuntuNfs.sh
+```
+2) Execute o script **scriptClientUbuntuNfs.sh**, para execute, escreva:
+
+```
+$ sudo sh scriptClientUbuntuNfs.sh
+```
+
+3) Informe o IP do servidor, ex:
+```
+$ 10.0.1.154
+```
+4) Informe o nome da pasta compartilhada no servidor, ex:
+```
+$ /home/users
+```
+5) Informe o nome da pasta compartilhada no cliente, ex:
+```
+$ /home
 ```
 
 <h2> Desenvolvedores</h2>
