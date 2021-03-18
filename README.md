@@ -46,7 +46,7 @@ $ serverad
 $ hostname
 ```
 
-<h2>Habilitando perfil móvel com **NFS**</h2><br />
+<h2>Habilitando perfil móvel com NFS</h2><br />
 
 1) Dê permissão para o script
 
@@ -77,5 +77,5 @@ $ /home
 [<img src="https://github.com/bruno977.png"  width=115 > <br> <sub> Bruno </sub>](https://github.com/Bruno977) |
 | :---: |
 
-[<img src="https:github.com/alandioneiron.png" width=115 > <br> <sub> Alan </sub>](https://github.com/alandioneiron) |
-| :---: | 
+[<img src="https://github.com/alandioneiron.png"  width=115 > <br> <sub> Alan </sub>](https://github.com/alandioneiron) |
+| :---: |
