@@ -13,7 +13,7 @@ Caso não tenho o **unzip**, para instalar, use:
 ```
 $ sudo apt install unzip
 ```
-3)Abra o arquivo **scriptClientUbuntu.sh** com um editor de sua preferencia ou com o bloco de notas e altera as seguintes linhas:
+3)Abra o arquivo **scriptClientUbuntu.sh** com um editor " nano, vim, vi" de sua preferencia ou com o bloco de notas e altera as seguintes linhas:
 ```
 $ serverIp=10.0.1.154 *ip do seu servidor*
 $ serverName=servidor *nome do seu servidor*
