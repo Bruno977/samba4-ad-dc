@@ -21,11 +21,26 @@ $ serverDomainUpCase=TIITANET.LOCAL *nome do dominio do servidor em maiusculo*
 $ serverNameAndDomain=servidor.tiitanet.local *nome completo do servidor*
 $ serverNameAndDomainUpCase=SERVIDOR.TIITANET.LOCAL *nome completo do servidor em maisculo*
 ``` 
-4) Adicione permissão ao arquivo
+4) Abra o terminal e adicione permissão ao arquivo
 ```
 $ sudo chmod +x scriptClientUbuntu.sh
 ```
 5) Execute o arquivo o arquivo
 ```
 sh scriptClientUbuntu.sh
+```
+6) Após executar o script, irá abrir uma janela referente ao kerberos, escreva as seguintes informações:
+```
+nome do dominio do servidor, ex:
+$ 10.0.1.154
+nome do servidor, ex:
+$ serverad
+digite novamente o nome do servidor, ex:
+$ serverad
+```
+7) Logo após, informe a senha cadastrada no servidor
+
+8) Logo após, informe o nome do PC, caso não saiba, execute o seguinte comando no terminal:
+```
+$ hostname
 ```
