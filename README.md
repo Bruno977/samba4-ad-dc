@@ -47,9 +47,8 @@ $ hostname
 
 <h2> Desenvolvedores</h2>
 
-
-[<img src="https://avatars2.githubusercontent.com/u/47644815?s=460&u=366c62260ffea2df04277453c563654babdd87db&v=4" width=115 > <br> <sub> Bruno </sub>](https://github.com/Bruno977) |
+[<img src="https://github.com/bruno977.png"  width=115 > <br> <sub> Bruno </sub>](https://github.com/Bruno977) |
 | :---: |
 
-[<img src="https://avatars.githubusercontent.com/u/58347723?s=400&u=107458cbd3377eaed658e6102e04a4c3dd59d321&v=4" width=115 > <br> <sub> Alan </sub>](https://github.com/alandioneiron) |
+[<img src="https:github.com/alandioneiron.png" width=115 > <br> <sub> Alan </sub>](https://github.com/alandioneiron) |
 | :---: | 
