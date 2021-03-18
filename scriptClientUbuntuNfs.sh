@@ -28,3 +28,4 @@ sed -i "/errors=remount/a $serverIp:$nameServer     $nameClient    nfs     defau
 sed -i "/grep/a exit 0" /etc/rc.local
 
 sudo chmod 755 /etc/rc.local
+
