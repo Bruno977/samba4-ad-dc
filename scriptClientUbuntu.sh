@@ -2,11 +2,11 @@
 
 #variaveis
 serverIp=10.0.1.154
-serverName=servidor
+serverName=serverad
 serverDomain=tiitanet.local
 serverDomainUpCase=TIITANET.LOCAL
-serverNameAndDomain=servidor.tiitanet.local
-serverNameAndDomainUpCase=SERVIDOR.TIITANET.LOCAL
+serverNameAndDomain=serverad.tiitanet.local
+serverNameAndDomainUpCase=SERVERAD.TIITANET.LOCAL
 
 #insere o nome e o dominio do servidor /etc/hosts
 sed -i "/127.0.1.1/a $serverIp	$serverName $serverNameAndDomain" /etc/hosts
