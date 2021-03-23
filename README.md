@@ -16,11 +16,11 @@ $ sudo apt install unzip
 3)Abra o arquivo **scriptClientUbuntu.sh** com um editor " nano, vim, vi" de sua preferencia ou com o bloco de notas e altera as seguintes linhas:
 ```
 $ serverIp=10.0.1.154 *ip do seu servidor*
-$ serverName=servidor *nome do seu servidor*
+$ serverName=serverad *nome do seu servidor*
 $ serverDomain=tiitanet.local *nome do dominio do servidor*
 $ serverDomainUpCase=TIITANET.LOCAL *nome do dominio do servidor em maiusculo*
-$ serverNameAndDomain=servidor.tiitanet.local *nome completo do servidor*
-$ serverNameAndDomainUpCase=SERVIDOR.TIITANET.LOCAL *nome completo do servidor em maisculo*
+$ serverNameAndDomain=serverad.tiitanet.local *nome completo do servidor*
+$ serverNameAndDomainUpCase=SERVERAD.TIITANET.LOCAL *nome completo do servidor em maisculo*
 ``` 
 4) Abra o terminal e adicione permissão ao arquivo
 ```
